@@ -11,7 +11,8 @@
     align-items: center;
     justify-content: space-between;
     img {
-      width: 80px;
+      width: 100px;
+      border-radius: 50%;
     }
     .completed {
       position: absolute;
@@ -37,5 +38,8 @@
     position: absolute;
     right: 20px;
     bottom: 10px;
+  }
+  .decoration {
+    text-decoration: line-through;
   }
 }

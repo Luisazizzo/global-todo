@@ -1,29 +1,35 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../store";
 import styles from "./index.module.scss";
 
 const Modal = () => {
-  const [input, setInput] = useState("");
+  // const [input, setInput] = useState("");
+  // const [inputImage, setInputImage] = useState("");
+  // const [inputName, setInputName] = useState("");
   const { state, dispatch } = useContext(Context);
 
   const toggleModal = () => {
     dispatch({ type: "TOGGLE_MODAL" });
   };
 
-  const onChange = (e) => {
-    setInput(e.target.value);
+  const onChangeName = (e) => {
+    dispatch({ type: "SET_TODO_NAME", payload: e.target.value });
   };
+  const onChangeImg = (e) => {
+    dispatch({ type: "SET_TODO_IMAGE", payload: e.target.value });
+  };
+  const onChangeTodo = (e) => {
+    dispatch({ type: "SET_TODO_TODO", payload: e.target.value });
+  };
+  useEffect(() => {
+    console.log(state.todoListData);
+  }, [state]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch({
       type: "CREATE_NEW_TODO",
-      payload: {
-        id: state.todoListData.lenght + 1,
-        todo: input,
-        completed: false,
-        userId: 26,
-      },
+      payload: state.listTodo,
     });
   };
 
@@ -32,8 +38,22 @@ const Modal = () => {
       <p onClick={toggleModal}>x</p>
       <form onSubmit={onSubmit}>
         <input
-          value={input}
-          onChange={onChange}
+          value={state.listTodo.username}
+          onChange={onChangeName}
+          type="text"
+          placeholder="userName"
+          required
+        />
+        <input
+          value={state.listTodo.image}
+          onChange={onChangeImg}
+          type="text"
+          placeholder="Photo Url..."
+          required
+        />
+        <input
+          value={state.listTodo.todo}
+          onChange={onChangeTodo}
           type="text"
           placeholder="Add new todo"
           required
